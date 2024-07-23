@@ -295,6 +295,7 @@ public class Main {
                 oos.writeObject(obj);
                 oos.flush();
 
+
                 int count = 0;
                 BangDiem[] lst = new BangDiem[100];
                 try (InputStream is = new FileInputStream(fileBD);
@@ -321,9 +322,9 @@ public class Main {
                 finally {
                     double Tongdiem = 0;
                     int tongTin = 0;
-                    for(int k = 0;k < count -2 ; count ++)
+                    for(int k = 0;k < count; k ++)
                     {
-                        Tongdiem += lst[k].getDiem();
+                        Tongdiem += lst[k].getDiem()*getMH(lst[k].getIdMH()).getSoDonViHT();
                         tongTin += getMH(lst[k].getIdMH()).getSoDonViHT();
                     }
                     double TB = Tongdiem / tongTin;
@@ -334,7 +335,6 @@ public class Main {
                         DiemTB ob = new DiemTB(idSV,TB,getSV(idSV).getHoTen());
                         ros.writeObject(ob);
                         ros.flush();
-                        ros.close();
 
                     }
                     catch (Exception ex)
@@ -343,7 +343,7 @@ public class Main {
                     }
                 }
             }
-            oos.close();
+
         }
         catch (Exception ex)
         {
@@ -402,12 +402,15 @@ public class Main {
                     lst[j] = lst[i];
                     lst[i] = temp;
                 }
-                for(BangDiem temp : lst)
-                {
-                    System.out.println(lst[i].toString());
-                }
             }
         }
+            for(BangDiem temp : lst)
+            {
+                if(temp != null)
+                {
+                    System.out.println(temp.toString());
+                }
+            }
     }
     }
 
@@ -442,10 +445,13 @@ public class Main {
                         lst[j] = lst[i];
                         lst[i] = temp;
                     }
-                    for(BangDiem temp : lst)
-                    {
-                        System.out.println(lst[i].toString());
-                    }
+                }
+            }
+            for(BangDiem temp : lst)
+            {
+                if(temp != null)
+                {
+                    System.out.println(temp.toString());
                 }
             }
         }
